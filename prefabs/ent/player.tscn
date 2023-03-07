@@ -1,6 +1,6 @@
-[gd_scene load_steps=32 format=3 uid="uid://65ijn6huxa16"]
+[gd_scene load_steps=32 format=3 uid="uid://b77o7rmplqhg"]
 
-[ext_resource type="Script" path="res://scripts/ent/player.gd" id="1_cq26p"]
+[ext_resource type="Script" path="res://scripts/ent/lumina_player.gd" id="1_y2vh4"]
 [ext_resource type="Script" path="res://scripts/ui/HUD.gd" id="2_4lqns"]
 [ext_resource type="PackedScene" uid="uid://fn4ue284pmgv" path="res://motion_blur/motion_blur.tscn" id="2_e685g"]
 [ext_resource type="Script" path="res://scripts/ui/mainmenu.gd" id="3_c0krd"]
@@ -536,7 +536,7 @@ font_size = 128
 
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
-script = ExtResource("1_cq26p")
+script = ExtResource("1_y2vh4")
 
 [node name="debug_hud" type="Control" parent="."]
 layout_mode = 3

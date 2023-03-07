@@ -38,9 +38,9 @@ func timeout():
 
 	await get_tree().create_timer(time).timeout
 	if is_2d:
-		util.playsfx(sound, 0.0, 0.0, self)
+		util.play_sfx(sound, 0.0, 0.0, self)
 	else:
-		util.playsfx3D(sound, 0.0, 0.0, 10.0, self)
+		util.play_sfx_3d(sound, 0.0, 0.0, 10.0, self)
 	
 	last_sound = index
 

@@ -16,12 +16,14 @@ func _ready():
 	
 func save_settings():
 	_settings_changed()
-	_save()	
+	_save()
 
 func _settings_changed():
-	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED if get_setting('vsync') else DisplayServer.VSYNC_DISABLED)
+	DisplayServer.window_set_vsync_mode(
+		DisplayServer.VSYNC_ENABLED if get_setting('vsync') else DisplayServer.VSYNC_DISABLED
+	)
 	
-	get_window().mode = Window.MODE_WINDOWED if get_setting('windowed') else Window.MODE_FULLSCREEN	
+	get_window().mode = Window.MODE_WINDOWED if get_setting('windowed') else Window.MODE_FULLSCREEN
 	
 	if get_setting("window_w") == -1 or get_setting("window_h") == -1:
 		get_window().size = DisplayServer.screen_get_size()
@@ -62,4 +64,3 @@ func _load():
 		_settings[key] = json[key]
 			
 	_settings_changed()
-	

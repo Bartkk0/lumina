@@ -56,7 +56,7 @@ func reload_subtitles():
 func _process(_delta):
 	get_tree().root.move_child(self, get_tree().root.get_child_count() - 1)
 
-func _input(event):
+func _input(_event):
 	if Input.is_key_pressed(KEY_F11):
 		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_WINDOWED:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
@@ -83,7 +83,7 @@ func _notification(what):
 						show_subtitle(subtitles_json[child.stream.get_path()], child.stream.get_length())
 
 func notif(msg : String):
-	util.playsfx("res://sound/ui/error.wav")
+	util.play_sfx("res://sound/ui/error.wav")
 	var preset = overlay.get_node("notif_container").get_node("preset").duplicate()
 	preset.get_child(0).get_child(0).text = str(msg)
 	preset.visible = true
@@ -105,7 +105,8 @@ func kill_node(ent):
 	else:
 		ent.queue_free()
 
-func playsfx(sfx: String, volume = 0.0, pitch = 1.0, parent : Node = null, loop : bool = false):
+func play_sfx(sfx: String, volume = 0.0, pitch = 1.0, parent : Node = null, _loop : bool = false):
+	# TODO: Implement looping
 	var player = AudioStreamPlayer.new()
 
 	if parent != null:
@@ -126,7 +127,8 @@ func playsfx(sfx: String, volume = 0.0, pitch = 1.0, parent : Node = null, loop 
 
 	player.play()
 
-func playsfx3D(sfx : String = "res://sound/vo/radiance_guy.wav", volume : float = 0.0, pitch : float = 1.0, range : float = 10.0, parent : Node = null, loop : bool = false, position : Vector3 = Vector3.ZERO):
+func play_sfx_3d(sfx : String = "res://sound/vo/radiance_guy.wav", volume : float = 0.0, pitch : float = 1.0, max_dist : float = 10.0, parent : Node = null, _loop : bool = false, position : Vector3 = Vector3.ZERO):
+	# TODO: Implement looping
 	var player = AudioStreamPlayer3D.new()
 
 	parent.add_child(player)
@@ -137,7 +139,7 @@ func playsfx3D(sfx : String = "res://sound/vo/radiance_guy.wav", volume : float 
 	player.stream = load(sfx)
 	player.volume_db = volume
 	player.pitch_scale = pitch
-	player.max_distance = range
+	player.max_distance = max_dist
 
 	player.name = sfx.replace("res://sound/", "")
 
@@ -155,7 +157,7 @@ func load_asset(path : String):
 
 	return load(path).instantiate()
 
-func sfxlength(sfx : String):
+func sfx_length(sfx : String):
 	var player = AudioStreamPlayer.new()
 	player.stream = load(sfx)
 	player.queue_free()
@@ -287,7 +289,7 @@ func hide_subtitle(sub : Node):
 	sub.queue_free()
 
 # bullets
-func hitscan_bullet(attacker : Node, damage : int, range : float, spread : float, bullet_hit_sound : String = "res://sound/player/weapon/bullet/impact/1.wav"):
+func hitscan_bullet(attacker : Node, damage : int, distance : float, spread : float, bullet_hit_sound : String = "res://sound/player/weapon/bullet/impact/1.wav"):
 	var ray = RayCast3D.new()
 
 	ray.add_exception(attacker)
@@ -297,13 +299,13 @@ func hitscan_bullet(attacker : Node, damage : int, range : float, spread : float
 	else:
 		attacker.add_child(ray)
 	
-	ray.target_position = Vector3(0, 0, -range)
+	ray.target_position = Vector3(0, 0, -distance)
 	ray.target_position += Vector3(randf_range(-spread, spread), randf_range(-spread, spread), randf_range(-spread, spread))
 
 	ray.force_raycast_update()
 
 	if bullet_hit_sound != "" && ray.is_colliding():
-		playsfx3D(bullet_hit_sound, 0.0, 0.0, 10.0, map, false, ray.get_collision_point())
+		play_sfx_3d(bullet_hit_sound, 0.0, 0.0, 10.0, map, false, ray.get_collision_point())
 
 	var self_world_transform = ray.global_transform
 	ray.get_parent().remove_child(ray)

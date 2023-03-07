@@ -8,7 +8,7 @@ func paused():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func mouse_entered():
-	util.playsfx("res://sound/ui/hover.wav")
+	util.play_sfx("res://sound/ui/hover.wav")
 
 func _ready():
 	if %chapter_select != null && %chapter_list != null && %chapter_template != null:
@@ -28,7 +28,7 @@ func _ready():
 			%chapter_list.add_child(button)
 
 func newgame_pressed():
-	util.playsfx("res://sound/ui/click.wav")
+	util.play_sfx("res://sound/ui/click.wav")
 
 	%chapter_select.popup_centered(Vector2(450, 150))
 
@@ -36,7 +36,7 @@ func quit_pressed():
 	get_tree().quit()
 
 func return_menu():
-	util.playsfx("res://sound/ui/click.wav")
+	util.play_sfx("res://sound/ui/click.wav")
 	util.load_map("res://scenes/mainmenu.tscn", true, true)
 	
 	while !util.has_node("Player"):
@@ -46,7 +46,7 @@ func return_menu():
 	util.player_node.queue_free()
 
 func credits_pressed():
-	util.playsfx("res://sound/ui/click.wav")
+	util.play_sfx("res://sound/ui/click.wav")
 	util.load_map("res://scenes/credits.tscn", true, true)
 	
 	while !util.has_node("Player"):
@@ -56,7 +56,7 @@ func credits_pressed():
 	util.player_node.process_mode = Node.PROCESS_MODE_DISABLED
 
 func chapter_pressed(chapter):
-	util.playsfx("res://sound/ui/click.wav")
+	util.play_sfx("res://sound/ui/click.wav")
 	
 	var hidehud = false
 
@@ -72,14 +72,14 @@ func chapter_pressed(chapter):
 	util.load_map("res://maps/" + chapters[chapter] + ".tscn", true, hidehud)
 
 func resume_pressed():
-	util.playsfx("res://sound/ui/click.wav")
+	util.play_sfx("res://sound/ui/click.wav")
 
 	get_tree().paused = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	visible = false
 
 func options_pressed():
-	util.playsfx("res://sound/ui/click.wav")
+	util.play_sfx("res://sound/ui/click.wav")
 
 	var settings = load("res://scenes/settings.tscn").instantiate()
 	add_child(settings)

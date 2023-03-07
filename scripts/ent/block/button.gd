@@ -1,14 +1,14 @@
-extends lumina_entity
+extends LuminaEntity
 
-@export var target : lumina_entity
+@export var target : LuminaEntity
 
 func _ready():
-	if !target is lumina_entity:
-		util.notif(str(self) + " Target isn't a lumina_entity or doesn't exist.")
+	if !target is LuminaEntity:
+		util.notif(str(self) + " Target isn't a LuminaEntity or doesn't exist.")
 
 func use():
-	if !target is lumina_entity:
-		util.notif(str(self) + " Target isn't a lumina_entity or doesn't exist.")
+	if !target is LuminaEntity:
+		util.notif(str(self) + " Target isn't a LuminaEntity or doesn't exist.")
 		return
 	
 	msg("used!")

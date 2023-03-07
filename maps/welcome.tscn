@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://cnhgsfvwd0ujb"]
+[gd_scene load_steps=11 format=3 uid="uid://cnhgsfvwd0ujb"]
 
 [ext_resource type="PackedScene" uid="uid://dsm52adrfam01" path="res://prefabs/map_empty.tscn" id="1_5chxy"]
 [ext_resource type="PackedScene" uid="uid://bwnxv0u6mts3x" path="res://prefabs/ent/player_spawn.tscn" id="1_ksfyf"]
 [ext_resource type="PackedScene" uid="uid://nhvw5e3iaiuf" path="res://prefabs/ent/game/ent_spawner.tscn" id="4_bno5u"]
 [ext_resource type="PackedScene" uid="uid://c47a3x61oyfrn" path="res://prefabs/ent/logic/button.tscn" id="5_an0wm"]
+[ext_resource type="PackedScene" uid="uid://8qd63hq7i7s1" path="res://prefabs/ent/triggers/trigger_chaptertext.tscn" id="5_q1spk"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_v17ty"]
 size = Vector2(8, 8)
@@ -94,9 +95,8 @@ shadow_enabled = true
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2, 1, 14)
 ent_name = "example/example"
 
-[node name="button" parent="." node_paths=PackedStringArray("target") instance=ExtResource("5_an0wm")]
+[node name="button" parent="." instance=ExtResource("5_an0wm")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2, 1, 10)
-target = NodePath("../ent_spawner")
 
 [node name="Label3D3" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 8)
@@ -118,3 +118,6 @@ conneceted to this ent_spawner entity.
 Once you press the button with your interaction key
 the button will call the \"trigger()\" method on the
 ent_spawner."
+
+[node name="trigger_chaptertext" parent="." instance=ExtResource("5_q1spk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.180708, 0, 4.65594)

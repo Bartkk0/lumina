@@ -1,4 +1,4 @@
-extends lumina_entity
+extends LuminaEntity
 
 @export var power : bool = true
 

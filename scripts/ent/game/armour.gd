@@ -1,4 +1,4 @@
-extends lumina_entity
+extends LuminaEntity
 
 @export var amount : int = 5
 

@@ -1,4 +1,4 @@
-extends lumina_entity
+extends LuminaEntity
 
 @export var damage : int = 10
 @export var type : String = "generic"

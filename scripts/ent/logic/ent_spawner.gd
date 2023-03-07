@@ -1,4 +1,4 @@
-extends lumina_entity
+extends LuminaEntity
 
 @export var ent_name : String = "armour_small"
 var ent : Node

@@ -1,5 +1,5 @@
 extends Node3D
-class_name weapon
+class_name Weapon
 
 enum wep_state {
 	IDLE,
@@ -208,19 +208,19 @@ func fire(type : String):
 	if type == "primary":
 		model_anim.stop()
 		model_anim.play("attack")
-		util.playsfx3D(fire_sound, -20.0, 1.0, 10.0, self)
+		util.play_sfx_3d(fire_sound, -20.0, 1.0, 10.0, self)
 	elif type == "primary_miss":
 		if model_anim.has_animation("attack_miss"):
 			model_anim.stop()
 			model_anim.play("attack_miss")
-			util.playsfx3D(fire_sound, -20.0, 1.0, 10.0, self)
+			util.play_sfx_3d(fire_sound, -20.0, 1.0, 10.0, self)
 		else:
 			fire("primary")
 	elif type == "secondary":
 		model_anim.stop()
 		model_anim.play("attack2")
-		util.playsfx3D(fire_sound_secondary, 0.0, 1.0, 10.0, self)
+		util.play_sfx_3d(fire_sound_secondary, 0.0, 1.0, 10.0, self)
 	elif type == "secondary_miss":
 		model_anim.stop()
 		model_anim.play("attack2_miss")
-		util.playsfx3D(fire_sound_secondary, 0.0, 1.0, 10.0, self)
+		util.play_sfx_3d(fire_sound_secondary, 0.0, 1.0, 10.0, self)

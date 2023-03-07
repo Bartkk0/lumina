@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-class_name lumina_player
+class_name LuminaPlayer
 
 var vars : ply_vars = ply_vars.new()
 
@@ -20,7 +20,7 @@ func _ready():
 	%use_ray.add_exception(self)
 
 func get_lumina_class():
-	return "lumina_player"
+	return "LuminaPlayer"
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -64,9 +64,9 @@ func _input(event):
 			if use_obj.has_method("use"):
 				use_obj.use()
 			else:
-				util.playsfx("res://sound/player/deny.wav")
+				util.play_sfx("res://sound/player/deny.wav")
 		else:
-			util.playsfx("res://sound/player/deny.wav")
+			util.play_sfx("res://sound/player/deny.wav")
 
 func can_power():
 	return vars.power > 0 && !vars.power_depleted
@@ -112,18 +112,18 @@ func _process(delta):
 
 	vars.mouse_delta = Vector2.ZERO
 
-func randomSFX(pack : String, max : int = 4):
+func random_sfx(pack : String, max : int = 4):
 	var rand = randi_range(1, max)
 
 	while rand == last_footstep:
 		rand = randi_range(1, max)
 
-	util.playsfx3D("res://sound/" + pack + "/" + str(rand) + ".wav", -10.0, 1.0, 10.0, head)
+	util.play_sfx_3d("res://sound/" + pack + "/" + str(rand) + ".wav", -10.0, 1.0, 10.0, head)
 	last_footstep = rand
 		
 
-func randomSFX3D(pack : String, max : int = 4, parent : Node = null):
-	util.playsfx3D("res://sound/" + pack + str(randi_range(1, max)) + ".ogg", 0.0, 1.0, 10.0, parent)
+func random_sfx_3d(pack : String, max : int = 4, parent : Node = null):
+	util.play_sfx_3d("res://sound/" + pack + str(randi_range(1, max)) + ".ogg", 0.0, 1.0, 10.0, parent)
 
 func weapon_switch(index : int):
 	if vars.weapon_inventory.size() == 0:
@@ -135,7 +135,7 @@ func weapon_switch(index : int):
 	%label_wep_name.text = get_node("Head").get_node(vars.weapon_active).display_name
 	%wep_texture.texture = load("res://mat/ui/img/hud/weapon/" + vars.weapon_active + ".png")
 
-	util.playsfx("res://sound/player/weapon/weapon_select.wav", 0.0, 1.0, head)
+	util.play_sfx("res://sound/player/weapon/weapon_select.wav", 0.0, 1.0, head)
 
 	%wep_select_anim.stop()
 	if index > 0:
@@ -159,9 +159,9 @@ func damage(type : String = "generic", amount : int = 10, knockback : Vector3 = 
 		"generic":
 			pass
 		"crush":
-			randomSFX3D("player/damage/playercrush", 2, self)
+			random_sfx_3d("player/damage/playercrush", 2, self)
 		"fall":
-			randomSFX3D("player/damage/playerfall", 2, self)
+			random_sfx_3d("player/damage/playerfall", 2, self)
 		#_:
 			print("no damage type...")
 	
@@ -183,7 +183,7 @@ func damage(type : String = "generic", amount : int = 10, knockback : Vector3 = 
 	
 	if vars.health <= 20:
 		if !alarmed:
-			util.playsfx("res://sound/player/alarm.wav")
+			util.play_sfx("res://sound/player/alarm.wav")
 			alarmed = true
 	else:
 		alarmed = false
@@ -222,7 +222,7 @@ func _physics_process(delta):
 			vars.gravity_vec = Vector3.ZERO
 
 			if fall > 0.0:
-				randomSFX("player/footsteps")
+				random_sfx("player/footsteps")
 
 				var multi = randf_range(-1, 1)
 				if multi == 0.0:
@@ -238,7 +238,7 @@ func _physics_process(delta):
 				fall = 0.0
 
 			if Input.is_action_just_pressed("movement_jump") && vars.health > 0:
-				randomSFX("player/footsteps")
+				random_sfx("player/footsteps")
 				vars.gravity_vec.y = vars.jump
 		else:
 			vars.accel = vars.ACCEL_AIR
@@ -270,17 +270,17 @@ func _physics_process(delta):
 	# FLASHLIGHT
 	if Input.is_action_just_pressed("weapon_flashlight") && vars.health > 0 && can_power():
 		vars.flashlight = !vars.flashlight
-		util.playsfx("res://sound/player/flashlight.wav", 0, 0, self)
+		util.play_sfx("res://sound/player/flashlight.wav", 0, 0, self)
 
 	elif Input.is_action_just_pressed("weapon_flashlight") && vars.health > 0 && !can_power():
-		util.playsfx("res://sound/player/deny.wav", 0, 0, self)
+		util.play_sfx("res://sound/player/deny.wav", 0, 0, self)
 
 	# FOOTSTEPS
 	if is_on_floor():
 		vars.footsteps_timer += 0.65 * delta
 		if vars.footsteps_timer > 1.5 / vars.speed && velocity.length() > 0.5:
 			vars.footsteps_timer = 0
-			randomSFX("player/footsteps")
+			random_sfx("player/footsteps")
 
 	# DEATH
 	if vars.health <= 0:
@@ -342,7 +342,7 @@ func power_tick():
 		if vars.power <= 0.0 && !vars.power_depleted:
 			if vars.power_shown:
 				%power_bar.modulate = Color(1.0, 0.0, 0.0)
-			util.playsfx3D("res://sound/player/power_depleted.wav", 0.0, 1.0, 10.0, self)
+			util.play_sfx_3d("res://sound/player/power_depleted.wav", 0.0, 1.0, 10.0, self)
 			vars.power_depleted = true
 			vars.flashlight = false
 		
