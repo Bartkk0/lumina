@@ -1,8 +1,8 @@
+class_name lumina_entity
 extends Node3D
 
-class_name lumina_entity
-
 func _process(delta):
+	draw_links()
 	if get_node_or_null("dev") != null:
 			get_node("dev").visible = util.developer
 
@@ -20,3 +20,9 @@ func error(msg):
 
 func msg(msg):
 	print("[" + str(self) + "] " + str(msg))
+
+func draw_links():
+	if "target" in self:
+			if self.target != null:
+				DebugDraw.draw_arrow_line(self.global_position, self.target.global_position,Color.DEEP_PINK,0.1,true)
+			
